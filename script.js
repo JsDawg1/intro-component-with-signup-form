@@ -41,6 +41,7 @@ function Main(){
         for(let paras of p){
             paras.style.display = 'none'
         }
+     }
 
 }
 
