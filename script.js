@@ -32,6 +32,15 @@ function Main(){
         e.style.display = 'block';
         p.style.display = 'block';
     } 
+     else{
+        const e = document.querySelectorAll('.error');
+        const p = document.querySelectorAll('.errorP');
+        for(let errors of e){
+            errors.style.display = 'none'
+        }
+        for(let paras of p){
+            paras.style.display = 'none'
+        }
 
 }
 
