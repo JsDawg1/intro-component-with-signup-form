@@ -4,49 +4,41 @@ const lName = document.querySelector('#Lname');
 const mail = document.querySelector('#email');
 const password = document.querySelector('#password');
 
-
 btn.addEventListener('click', Main);
 
-function Main(){
-    if(fName.value===''){
-        const e = document.querySelector('#errorfn');
-        const p = document.querySelector('#errorFn');
-        e.style.display = 'block';
-        p.style.display = 'block';
-    }
-    if(lName.value===''){
-        const e = document.querySelector('#errorln');
-        const p = document.querySelector('#errorLn');
-        e.style.display = 'block';
-        p.style.display = 'block';
-    }
-    if(!emailVal(mail.value) || mail.value===''){
-        const e = document.querySelector('#errormail');
-        const p = document.querySelector('#errorMail');
-        e.style.display = 'block';
-        p.style.display = 'block';
-    }
-    if(password.value===''){
-        const e = document.querySelector('#errorpass');
-        const p = document.querySelector('#errorPass');
-        e.style.display = 'block';
-        p.style.display = 'block';
-    } 
-     else{
-        const e = document.querySelectorAll('.error');
-        const p = document.querySelectorAll('.errorP');
-        for(let errors of e){
-            errors.style.display = 'none'
-        }
-        for(let paras of p){
-            paras.style.display = 'none'
-        }
-     }
+function Main() {
+    let isValid = true; // Flag to track if all fields are valid
 
+    isValid = validateField(fName, '#errorfn', '#errorFn') && isValid;
+    isValid = validateField(lName, '#errorln', '#errorLn') && isValid;
+    isValid = validateField(mail, '#errormail', '#errorMail', emailVal) && isValid;
+    isValid = validateField(password, '#errorpass', '#errorPass') && isValid;
+
+     if (isValid) {
+        console.log("Form submitted successfully!");
+    }
 }
 
-function emailVal(mail){
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(mail);
+function validateField(inputField, errorSelector, errorPSelector, validationFunc = check) {
+    const e = document.querySelector(errorSelector);
+    const p = document.querySelector(errorPSelector);
+    
+    if (!validationFunc(inputField.value)) {
+        e.style.display = 'block';
+        p.style.display = 'block';
+        return false;
+    } else {
+        e.style.display = 'none';
+        p.style.display = 'none';
+        return true;
+    }
+}
 
+function emailVal(mail) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(mail) && mail.length > 0;
+}
+
+function check(string) {
+    return string !== ''; // Returns true if the string is not empty
 }
